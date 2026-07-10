@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QFormLayout, QPushButton, QLineEdit, QLabel,
     QTableWidget, QTableWidgetItem, QHeaderView,
-    QMessageBox, QFileDialog, QSplitter, QDateEdit)
+    QMessageBox, QFileDialog, QSplitter, QDateEdit, QComboBox)
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QPixmap, QImage
 from PIL import Image
@@ -69,7 +69,8 @@ class MainWindow(QMainWindow):
         form_layout = QFormLayout(form_widget)
 
         self.line_name = QLineEdit()
-        self.line_species = QLineEdit()
+        self.line_species = QComboBox()
+        self.line_species.addItems(["Кошка", "Собака", "Грызун", "Птица", "Рептилия", "Другое" ])
         self.line_vaccine = QLineEdit()
         self.date_edit = QDateEdit()
         self.date_edit.setDate(QDate.currentDate())
@@ -115,7 +116,7 @@ class MainWindow(QMainWindow):
 
     #добавление записи
     def _on_add(self):
-        if not self.line_name.text().strip():
+        if not self.line_name.currentText().strip():
             QMessageBox.warning(self, "Ошибка", "Поле 'Кличка' обязательно!")
             return
 
