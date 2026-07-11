@@ -29,6 +29,7 @@ class MainWindow(QMainWindow):
 
         #загрузка данных
         self._refresh_table()
+        self._current_image_path = ""
 
     #создание интерфейса
     def _setup_ui(self):
@@ -125,7 +126,8 @@ class MainWindow(QMainWindow):
             "species": self.line_species.text().strip(),
             "vaccine": self.line_vaccine.text().strip(),
             "date": self.date_edit.date().toString("yyyy-MM-dd"),
-            "vet": self.line_vet.text().strip()}
+            "vet": self.line_vet.text().strip(),
+            "image_path": self._current_image_path}
 
         self.db.insert_record(data)
         self._refresh_table()
@@ -209,6 +211,7 @@ class MainWindow(QMainWindow):
                 img.tobytes(), img.width, img.height,
                 QImage.Format_RGBA8888)
             pixmap = QPixmap.fromImage(qt_img)
+            self._current_image_path = path
             self.label_image.setPixmap(pixmap)
             self.label_image.setScaledContents(True)
             self.label_image.setStyleSheet(
@@ -244,6 +247,7 @@ class MainWindow(QMainWindow):
         self.label_image.setText("Фото питомца")
         self.label_image.setStyleSheet(
             "background-color: #f5f5f5; border: 2px dashed #bbb; border-radius: 8px;")
+        self._current_image_path = ""
 
     def closeEvent(self, event):
         reply = QMessageBox.question(
