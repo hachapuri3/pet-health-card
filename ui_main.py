@@ -43,12 +43,12 @@ class MainWindow(QMainWindow):
         left_layout = QVBoxLayout(left_widget)
 
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["ID", "Кличка", "Вид", "Прививка", "Дата", "Ветеринар"])
+        self.table.setColumnCount(7)
+        self.table.setHorizontalHeaderLabels(["ID", "Кличка", "Вид", "Прививка", "Дата", "Ветеринар", "Путь к фото"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setSelectionBehavior(QTableWidget.SelectRows)
         self.table.setEditTriggers(QTableWidget.NoEditTriggers)
-        self.table.setColumnHidden(0, True) #скрытие ID
+        self.table.setColumnHidden(6, True) #скрытие ID
 
         left_layout.addWidget(self.table)
 
@@ -193,6 +193,30 @@ class MainWindow(QMainWindow):
 
         self.line_vet.setText(self.table.item(row, 5).text())
 
+        # загрузка фото
+        image_path = self.table.item(row, 6).text() if self.table.columnCount() > 6 else ""
+        if image_path and image_path.strip():
+            try:
+                from PIL import Image
+                img = Image.open(image_path).convert("RGBA")
+                img.thumbnail((250, 250), Image.LANCZOS)
+                qt_img = QImage(img.tobytes(), img.width, img.height, QImage.Format_RGBA8888)
+                pixmap = QPixmap.fromImage(qt_img)
+                self.label_image.setPixmap(pixmap)
+                self.label_image.setScaledContents(True)
+                self.label_image.setStyleSheet("background-color: white; border: 2px solid #999; border-radius: 8px;")
+                self._current_image_path = image_path
+            except Exception as e:
+                #если фото не загрузилось
+                self.label_image.setText("Фото питомца")
+                self.label_image.setStyleSheet(
+                    "background-color: #f5f5f5; border: 2px dashed #bbb; border-radius: 8px;")
+                self._current_image_path = ""
+        else:
+            self.label_image.setText("Фото питомца")
+            self.label_image.setStyleSheet("background-color: #f5f5f5; border: 2px dashed #bbb; border-radius: 8px;")
+            self._current_image_path = ""
+
     #загрузка и масштабирование фото
     def _on_load_image(self):
         path, _ = QFileDialog.getOpenFileName(
@@ -232,6 +256,7 @@ class MainWindow(QMainWindow):
             self.table.setItem(i, 3, QTableWidgetItem(rec["vaccine"] or ""))
             self.table.setItem(i, 4, QTableWidgetItem(rec["date"] or ""))
             self.table.setItem(i, 5, QTableWidgetItem(rec["vet"] or ""))
+            self.table.setItem(i, 6, QTableWidgetItem(rec["image_path"] or ""))
 
             #сохранение ID в скрытой роли
             self.table.item(i, 0).setData(Qt.UserRole, rec["id"])
