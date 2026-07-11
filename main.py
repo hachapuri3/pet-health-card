@@ -1,3 +1,10 @@
+import logging
+
+logging.basicConfig(
+    filename='app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    encoding='utf-8')
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QFont

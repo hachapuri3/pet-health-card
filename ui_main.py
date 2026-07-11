@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QPixmap, QImage
 from PIL import Image
+import logging
 import database
 
 
@@ -145,6 +146,7 @@ class MainWindow(QMainWindow):
         self._refresh_table()
         self._clear_fields()
         QMessageBox.information(self, "Успех", "Запись добавлена!")
+        logging.info(f"Запись добавлена: {data['name']}")
 
     #редактирование записи
     def _on_edit(self):
@@ -167,6 +169,7 @@ class MainWindow(QMainWindow):
         self.db.update_record(data)
         self._refresh_table()
         QMessageBox.information(self, "Успех", "Запись обновлена!")
+        logging.info(f"Запись обновлена: ID={data['id']}, {data['name']}")
 
     #удаление записи
     def _on_delete(self):
@@ -186,6 +189,7 @@ class MainWindow(QMainWindow):
             self.db.delete_record(item_id)
             self._refresh_table()
             self._clear_fields()
+            logging.info(f"Запись удалена: ID={item_id}")
 
     #заполнение формы при выборе строки
     def _on_select_row(self):
@@ -255,6 +259,7 @@ class MainWindow(QMainWindow):
 
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Не удалось загрузить изображение:\n{e}")
+            logging.error(f"Ошибка загрузки фото: {e}")
 
     #обновление таблицы
     def _refresh_table(self):
