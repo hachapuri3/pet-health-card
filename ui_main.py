@@ -20,6 +20,17 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(850, 500)
         self.setStyleSheet("""
             QMainWindow { background-color: #f0f4f8; }""")
+        self.setStyleSheet("""
+            QMainWindow { background-color: #f0f4f8; }
+            QPushButton {
+                background-color: #4a90d9; color: white; border: none;
+                padding: 8px 16px; border-radius: 6px; font-weight: bold;}
+            QPushButton:hover { background-color: #357abd; }
+            QTableWidget {
+                background-color: white; alternate-background-color: #f9f9f9;
+                gridline-color: #d0d7de;}
+            QLineEdit, QDateEdit {
+                padding: 6px; border: 1px solid #ccc; border-radius: 4px;}""")
 
         #подключение базы данных
         self.db = database.DatabaseManager()
