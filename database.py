@@ -36,7 +36,7 @@ class DatabaseManager:
         cursor = self.conn.cursor()
         cursor.execute("""
             INSERT INTO pets (name, species, vaccine, date, vet, image_path)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
         """, (data["name"], data["species"], data["vaccine"],
               data["date"], data["vet"], data.get("image_path", "")))
         self.conn.commit()
