@@ -18,9 +18,3 @@
 - **SQLite** — база данных  
 - **Pillow** — обработка изображений  
 - **Git** — контроль версий
-
-# Запуск проекта
-
-1. **Клонируйте репозиторий:**
-   ```bash
-   https://github.com/hachapuri3/pet-health-card/tree/hachapuri3
