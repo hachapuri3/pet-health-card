@@ -18,3 +18,5 @@
 - **SQLite** — база данных  
 - **Pillow** — обработка изображений  
 - **Git** — контроль версий
+
+<img width="1047" height="687" alt="image" src="https://github.com/user-attachments/assets/29c56255-9315-40c8-a2d3-cb0ccd8c553a" />
