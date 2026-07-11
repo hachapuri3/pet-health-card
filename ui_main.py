@@ -18,6 +18,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Карта здоровья питомца")
         self.resize(1050, 650)
         self.setMinimumSize(850, 500)
+        self.setStyleSheet("""
+            QMainWindow { background-color: #f0f4f8; }""")
 
         #подключение базы данных
         self.db = database.DatabaseManager()
