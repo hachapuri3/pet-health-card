@@ -21,7 +21,8 @@ class DatabaseManager:
                 species TEXT,
                 vaccine TEXT,
                 date TEXT,
-                vet TEXT)""")
+                vet TEXT,
+                image_path TEXT)""")
         self.conn.commit()
 
     #получение всех записей
@@ -34,10 +35,10 @@ class DatabaseManager:
     def insert_record(self, data):
         cursor = self.conn.cursor()
         cursor.execute("""
-            INSERT INTO pets (name, species, vaccine, date, vet)
+            INSERT INTO pets (name, species, vaccine, date, vet, image_path)
             VALUES (?, ?, ?, ?, ?)
         """, (data["name"], data["species"], data["vaccine"],
-              data["date"], data["vet"]))
+              data["date"], data["vet"], data.get("image_path", "")))
         self.conn.commit()
 
     #обновление записи
@@ -45,10 +46,10 @@ class DatabaseManager:
         cursor = self.conn.cursor()
         cursor.execute("""
             UPDATE pets 
-            SET name=?, species=?, vaccine=?, date=?, vet=?
+            SET name=?, species=?, vaccine=?, date=?, vet=?, image_path=?
             WHERE id=?
         """, (data["name"], data["species"], data["vaccine"],
-              data["date"], data["vet"], data["id"]))
+              data["date"], data["vet"],  data.get("image_path", ""), data["id"]))
         self.conn.commit()
 
     #удаление записи
